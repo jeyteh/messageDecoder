@@ -26,26 +26,16 @@ func (q *Queue) Peek() string {
 }
 
 func main() {
-
-	// const text = "TNM AEIOU"
-	// var keyString = "0010101100011101000100111011001111000"
-
-	// const text = "$#**\\"
-	// var keyString = "0100000101101100011100001000"
-
 	reader := bufio.NewReader(os.Stdin)
 
 	text, _ := reader.ReadString('\n')
-	// var keyString string
 	text = strings.TrimSpace(text)
 
+	// wait for input
 	for len(text) > 0 {
-		// fmt.Print("-> ")
 		keyString, _ := reader.ReadString('\n')
 
 		keyString = strings.TrimSpace(keyString)
-
-		// if strings.Contains(keyString, "0") || strings.Contains(keyString, "1") {
 
 		m := make(map[string]string)
 
@@ -55,7 +45,6 @@ func main() {
 			m[defCodeList[i]] = string(text[i])
 		}
 
-		// fmt.Println(m)
 		defaultCode := 3
 		code := getCode(keyString, defaultCode) //string to count
 
@@ -95,14 +84,10 @@ func main() {
 			keyString = keyString[sum:len(keyString)]
 		}
 		fmt.Println("")
-		// }
-		break
 	}
 }
 
 func getCode(code string, subLen int) string {
-	// fmt.Println(code)
-	// fmt.Println(subLen)
 	cd := code[:subLen]
 	return cd
 }
@@ -145,7 +130,4 @@ func generateDefaultBinary(len int) []string {
 	}
 
 	return list
-	// for i := 0; i < len(s); i++ {
-	// 	fmt.Println(defCodeList[i])
-	// }
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"os"
 	"strings"
@@ -31,11 +32,30 @@ func main() {
 	text, _ := reader.ReadString('\n')
 	text = strings.TrimSpace(text)
 
+	var keyString string
+	var buffer bytes.Buffer
+
 	// wait for input
 	for len(text) > 0 {
-		keyString, _ := reader.ReadString('\n')
+		keysInput, _ := reader.ReadString('\n')
+		keysInput = strings.TrimSpace(keysInput)
 
-		keyString = strings.TrimSpace(keyString)
+		if !strings.Contains(keysInput, "0") && !strings.Contains(keysInput, "1") {
+			text = keysInput
+			keyString = ""
+			buffer.Reset()
+			continue
+		}
+
+		// keycodes will end/terminate with 000
+		if keysInput[len(keysInput)-3:len(keysInput)] != "000" {
+			buffer.WriteString(keysInput)
+			keyString = buffer.String()
+			continue
+		} else {
+			buffer.WriteString(keysInput)
+			keyString = buffer.String()
+		}
 
 		m := make(map[string]string)
 
@@ -82,6 +102,7 @@ func main() {
 
 			fmt.Print(m[codeToDecode])
 			keyString = keyString[sum:len(keyString)]
+			// continue
 		}
 		fmt.Println("")
 	}
